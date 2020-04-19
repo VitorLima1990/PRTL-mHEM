@@ -1,0 +1,22 @@
+STRUCTURE FILE INPUT DATA
+INSTRUCTIONS:
+1)X, Y, SAG, RADIUS AND SPACING VALUES IN METER
+2)Y VALUES ARE THE CABLE VERTICAL DISTANCES TO THE GROUND ON THE TOWER
+3)CORE STANDS FOR THE CORE RADIUS OF THE CABLE. FOR HOMOGENEOUS CABLE INSERT 0.
+4)RDC IS THE CABLE DC RESISTANCE IN OHM/METER
+5)N IS THE NUMBER OF CABLES PER PHASE
+6)BUNDLE_ANGLE IS THE ANGLE BETWEEN THE FIRST SUBCONDUCTOR OF THE BUNDLE AND THE HORIZONTAL AXIS. FOR SINGLE CONDUCTORS INSERT 0.
+7)DESCRIPTION CAN BE "PHASE", "GW" (GROUND WIRE) OR "UNDERBUILT"
+
+START INPUT DATA
+TITLE: ESTRUTURA TESTE 230 kV CD
+   X       Y     SAG         RADIUS       CORE   N    SPACING   BUNDLE_ANGLE          RDC   DESCRIPTION
+-4.0    37.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+-4.0    31.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+-4.0    25.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+ 4.0    25.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+ 4.0    31.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+ 4.0    37.35  17.85       0.013265          0   1          0              0   0.00007998         PHASE
+-4.5    42.05  14.63       0.004570          0   1          0              0      0.00419            GW
+ 4.5    42.05  14.63       0.004570          0   1          0              0      0.00419            GW
+END USER INPUT DATA
