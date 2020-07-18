@@ -309,7 +309,7 @@ class Z_Ground:
             BI0_re = special.iv(0, n * re) #modified Bessel function of the first kind order 0
             BI1_re = special.iv(1, n * re) #modified Bessel function of the first kind order 1
             
-            if(math.isinf(BI0_re) or math.isinf(BI1_re)):                
+            if(math.isinf(BI0_re.real) or math.isinf(BI0_re.imag) or math.isinf(BI1_re.real)or math.isinf(BI1_re.imag)):                
                 Zc = (Ro * n) / ((2 * math.pi * re))
             else:             
                 Zc = (Ro * n * BI0_re) / ((2 * math.pi * re) * BI1_re)

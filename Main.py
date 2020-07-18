@@ -46,6 +46,7 @@ def main(argv=None):
     outputGroundFreq = bIData.outputGroundFreq
     
     calculateFlashOver_Rate = bIData.CalculateFLASH_Rate
+    InsulatorRupTime = bIData.InsulatorRupTime
     ArcDistance = bIData.ArcDistance
     CFO = bIData.CFO
     ThunderDays = bIData.ThunderDays 
@@ -92,8 +93,9 @@ def main(argv=None):
                     sk = complex(0, -1) * cc
                     constantGroundZ = (Ground.Zg(sk, Tspan, False)).real
                     print("\nCalculated Ground Resistance (ohms) = " + str(round(constantGroundZ, 3)))
-                else:
+                else:  
                     zGroundFreq = Ground.ZgFrequency(SimulationTime, FrequencySamples, groundFrequencyParam)
+                    
                     # Save frequency dependent ground model to a file for latter reuse
                     if(outputGroundFreq != None):                    
                         Save(outputGroundFreq, zGroundFreq)
@@ -109,8 +111,8 @@ def main(argv=None):
             print("\nInsert the Arc Distance, in meters, or the critical Flashover (CFO), in kV, to calculate the Flashover Rate.")        
         else:
             if(CFO == None):
-                CFO = 530 * ArcDistance # Nolasco (page 53)
-            prob, V_insulatorMax = simulatedSystem.DE(CFO, ThunderDays, V_TopInsulator, V_MiddleInsulator, V_BottomInsulator, t, SimulationTime * 10 ** 6)
+                CFO = 530 * ArcDistance #Reference: Overhead Power Lines, Planning, Design, Construction, 2002 (page 53)
+            prob, V_insulatorMax = simulatedSystem.DE(CFO, ThunderDays, V_TopInsulator, V_MiddleInsulator, V_BottomInsulator, t, InsulatorRupTime * 10 ** 6)
             print("Outages Rate per 100 km per year = " + str(round(prob, 3)))
    
     i = 0
@@ -120,11 +122,24 @@ def main(argv=None):
     print("Middle Insulator Voltage Peak [kV] = " + str(round(max(V_MiddleInsulator[0:(i + 1)]), 3)))
     print("Bottom Insulator Voltage Peak [kV] = " + str(round(max(V_BottomInsulator[0:(i + 1)]), 3)))
     
-    #https://matplotlib.org/3.1.1/tutorials/introductory/pyplot.html      
+    #https://matplotlib.org/3.1.1/tutorials/introductory/pyplot.html     
+    greek_letterz=[chr(code) for code in range(945,970)] 
+    SMALL_SIZE = 15
+    MEDIUM_SIZE = 20
+    BIGGER_SIZE = 22
+    
+    mplot.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    mplot.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    mplot.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    mplot.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    mplot.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    mplot.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    mplot.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title       
+    
     mplot.figure(figsize=(10, 8))
     mplot.subplot(211)
     mplot.plot(t, simulatedSystem.HeidlerCurrent.current,'r-')
-    mplot.xlabel('Time [us]')
+    mplot.xlabel('Time [' + greek_letterz[11] + 's]')
     mplot.ylabel('Current [kA]')
     mplot.xlim(0, SimulationTime/1 * 10 ** 6)
     mplot.figure(figsize=(10, 8))
@@ -134,7 +149,7 @@ def main(argv=None):
     mplot.plot(t, V_BottomInsulator, 'g-', label="Bottom Insulator")
     mplot.plot(t, V_GPR, 'b--', label="Ground Potencial Rise")
     mplot.legend(loc="upper right")
-    mplot.xlabel('Time [us]')
+    mplot.xlabel('Time [' + greek_letterz[11] + 's]')
     mplot.ylabel('Voltage [kV]')    
     mplot.xlim(0, SimulationTime * 10 ** 6)    
     mplot.show()    

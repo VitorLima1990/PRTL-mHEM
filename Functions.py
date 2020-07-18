@@ -136,7 +136,8 @@ class BasicInputData:
         self.strFrequencyParam = False
         self.outputGroundFreq = None
         self.CalculateFLASH_Rate = False
-        self.ArcDistance = None
+        self.InsulatorRupTime = None        
+        self.ArcDistance = None        
         self.CFO = None
         self.ThunderDays = None
         self.ErrorDetected = False
@@ -165,7 +166,7 @@ class BasicInputData:
             self.FrequencySamples = int(self.fileLines[i].replace("NUMBER OF FREQUENCY SAMPLES: ", ""))
             i += 1
             try:
-                values = self.fileLines[i].replace("IMPEDANCES VALUES IN OHMS USED FOR THE TOWER CASCADE MODEL. FROM THE TOWER TOP TO BOTTOM, INSERT FOUR VALUES SEPARETED BY COMA (LEAVE IT BLANK FOR USING RECOMMENDED VALUES): ", "").split(',')
+                values = self.fileLines[i].replace("IMPEDANCES VALUES IN OHMS USED FOR THE TOWER CASCADE MODEL. FROM THE TOWER TOP TO BOTTOM, INSERT FOUR VALUES SEPARETED BY COMMA (LEAVE IT BLANK FOR USING RECOMMENDED VALUES): ", "").split(',')
                 for value in values:
                     self.TowerImpedances.append(float(value.strip()))
             except:
@@ -198,6 +199,12 @@ class BasicInputData:
             calc = self.fileLines[i].replace("CALCULATE FLASHOVER RATE (YES OR NO): ", "").upper().strip()
             if(calc == "YES"):
                 self.CalculateFLASH_Rate = True
+             
+            i += 1
+            try:
+                self.InsulatorRupTime = float(self.fileLines[i].replace("TIME CONSIDERED FOR OUTAGES CALCULATION (IN SECONDS): ", ""))
+            except:
+                self.InsulatorRupTime = None
             
             i += 1
             try:

@@ -189,8 +189,9 @@ class System:
         while(t[i] <= tmax):
             i += 1
         
-        V_insulators = [V_TopInsulator[0:(i+1)], V_MiddleInsulator[0:(i+1)], V_BottomInsulator[0:(i+1)]]
-        for V_Insulator in V_insulators:        
+        V_insulators = [V_TopInsulator, V_MiddleInsulator, V_BottomInsulator]
+        for V_Insulator in V_insulators:
+            V_Insulator = V_Insulator[0:(i+1)]
             VoltagePeak = max(V_Insulator)        
             Continue = True
             n = 1        
